@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chef Master Game</title>
+
+  <!-- Link to external CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="game-container">
+    <h1 class="title">👨‍🍳 Chef Master</h1>
+
+    <!-- ===== Stats ===== -->
+    <div class="stats">
+      <div class="stat">
+        <div>⭐ ชื่อเสียง</div>
+        <div id="fame">0</div>
+      </div>
+      <div class="stat">
+        <div>💰 เหรียญ</div>
+        <div id="coins">100</div>
+      </div>
+      <div class="stat">
+        <div>📋 สูตรอาหาร</div>
+        <div id="recipes">4</div>
+      </div>
+    </div>
+
+    <!-- ===== Start Screen ===== -->
+    <div id="start-screen">
+      <div class="game-area">
+        <h2>🌟 เริ่มต้นผจญภัยตามความฝัน! 🌟</h2>
+        <div class="story-box">
+          <div class="character">
+            <div class="character-avatar">👨‍🍳</div>
+            <div>
+              <div class="character-name">เชฟมาสเตอร์</div>
+              <div style="font-size: 0.9rem; opacity: 0.8;">อาจารย์สอนทำอาหาร</div>
+            </div>
+          </div>
+          <div class="dialogue">
+            "ยินดีต้อนรับสู่โรงเรียนเชฟ! ฉันคือเชฟมาสเตอร์
+            ผู้ที่จะช่วยให้เธอกลายเป็นเชฟระดับโลก! เส้นทางนี้ไม่ง่าย
+            แต่ถ้าเธอมีใจรักในการทำอาหาร เธอจะสามารถผ่านมันไปได้!"
+          </div>
+        </div>
+
+        <p class="intro">
+          📖 <strong>เส้นทางสู่ Master Chef:</strong><br>
+          1️⃣ <strong>การฝึกหัด</strong> - เรียนรู้พื้นฐาน (1 วัตถุดิบ) 🥛<br>
+          2️⃣ <strong>เชฟมือใหม่</strong> - ทำอาหารง่ายๆ (2 วัตถุดิบ) 🍞<br>
+          3️⃣ <strong>เชฟมืออาชีพ</strong> - อาหารระดับกลาง (3-4 วัตถุดิบ) 🍜<br>
+          4️⃣ <strong>การแข่งขัน</strong> - ท้าทายเวลา (4-5 วัตถุดิบ) 🍰<br>
+          5️⃣ <strong>Master Chef</strong> - เป้าหมายสูงสุด! 👑
+        </p>
+
+        <div class="emoji-banner">🍳✨🥘✨🍰</div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn btn-primary" onclick="showTutorial()">🎓 วิธีเล่น</button>
+        <button class="btn btn-secondary" onclick="startGame()">⚡ เล่นเลย!</button>
+      </div>
+    </div>
+
+    <!-- ===== Tutorial Overlay ===== -->
+    <div id="tutorial-overlay" class="tutorial-overlay hidden">
+      <div class="tutorial-box">
+        <button class="skip-btn" onclick="skipTutorial()">ข้าม ⏭️</button>
+        <div id="tutorial-content"></div>
+      </div>
+    </div>
+
+    <!-- ===== Game Screen ===== -->
+    <div id="game-screen" class="hidden">
+      <div class="timer" id="timer">⏰ เวลา: 90 วินาที</div>
+
+      <div class="game-area">
+        <div class="order-header">
+          <div id="current-order">🎯 ออเดอร์: <span id="order-dish">🥛 นม</span></div>
+          <div class="level-badge">📊 ด่าน <span id="current-level">1</span></div>
+        </div>
+
+        <div class="cooking-area" id="cooking-area">
+          🍳 เลือกวัตถุดิบเพื่อทำอาหาร
+        </div>
+
+        <div class="ingredients" id="ingredients"></div>
+      </div>
+
+      <div class="action-buttons">
+        <button id="cook-btn" class="btn btn-primary" onclick="cookDish()" disabled>👨‍🍳 ทำอาหาร!</button>
+        <button class="btn btn-secondary" onclick="resetIngredients()">🔄 รีเซ็ต</button>
+      </div>
+
+      <div class="message" id="message"></div>
+    </div>
+
+    <!-- ===== Result Screen ===== -->
+    <div id="result-screen" class="hidden">
+      <div class="game-area">
+        <div id="result-content"></div>
+      </div>
+      <div class="action-buttons">
+        <button class="btn btn-success" onclick="nextLevel()">ด่านต่อไป 🎯</button>
+        <button class="btn btn-secondary" onclick="viewRecipes()">ดูสูตรอาหาร 📋</button>
+      </div>
+    </div>
+
+    <!-- ===== Recipe Screen ===== -->
+    <div id="recipe-screen" class="hidden">
+      <div class="game-area">
+        <h3>📋 สูตรอาหารที่ปลดล็อกแล้ว</h3>
+        <div class="recipe-list" id="recipe-list"></div>
+      </div>
+      <button class="btn btn-primary" onclick="backToGame()">กลับเกม 🎮</button>
+    </div>
+  </div>
+
+  <!-- External JS -->
+  <script src="js/game.js"></script>
+</body>
+</html>
