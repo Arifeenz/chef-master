@@ -45,19 +45,38 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+/* ====== Stats ====== */
 .stats {
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* บังคับ 3 คอลัมน์ */
+  gap: 15px;
   margin: 20px 0;
   background: #f8f9fa;
-  padding: 15px;
-  border-radius: 10px;
+  padding: 20px;
+  border-radius: 12px;
 }
 
 .stat {
+  background: white;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 1rem;
   text-align: center;
-  font-size: 1.1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.stat:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.stat div:first-child {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
 
 /* ====== Game Area ====== */
 .game-area {
@@ -172,6 +191,7 @@ body {
   font-weight: bold;
   color: #e74c3c;
   margin: 15px 0;
+  animation: pulse 1s infinite;
 }
 
 @keyframes pulse {
@@ -204,6 +224,16 @@ body {
 
 .btn-secondary {
   background: #74b9ff;
+  color: white;
+}
+
+.btn-warning {
+  background: #fdcb6e;
+  color: #2d3436;
+}
+
+.btn-danger {
+  background: #e74c3c;
   color: white;
 }
 
@@ -322,3 +352,53 @@ body {
 .hidden { display: none; }
 .intro { font-size: 1.1rem; margin: 20px 0; text-align: left; }
 .emoji-banner { font-size: 3rem; margin: 20px 0; }
+
+/* ====== Shop Popup ====== */
+.shop-popup {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border: 3px solid #f9ca24;
+  border-radius: 12px;
+  padding: 20px;
+  z-index: 999;
+  width: 90%; max-width: 360px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.25);
+}
+.shop-popup.hidden { display: none; }
+
+.shop-box h2 { margin-top: 0; }
+.shop-items button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #ffd32a;
+  cursor: pointer;
+}
+.shop-items button:hover {
+  background-color: #fbc531;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr); /* Tablet/Mobile เป็น 2 คอลัมน์ */
+  }
+}
+
+@media (max-width: 480px) {
+  .stats {
+    grid-template-columns: 1fr; /* มือถือจอเล็กมาก เป็น 1 คอลัมน์ */
+  }
+}
+
+.ingredient.hint {
+  background: #dff9fb;
+  border-color: #00b894;
+  box-shadow: 0 0 10px rgba(0, 184, 148, 0.7);
+}
