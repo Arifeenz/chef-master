@@ -10,20 +10,40 @@ const recipes = {
   "🍚 ข้าวหอม": ["🍚 ข้าวหอม"],
   "🍌 กล้วยหิน": ["🍌 กล้วยหิน"],
   "🥚 ไข่ต้ม": ["🥚 ไข่"],
+  "🍗 ไก่ทอด": ["🍗 เนื้อไก่"],
+  "🥗 สลัดผัก": ["🥬 ผัก"],
+  "🐟 ปลาทอด": ["🐟 ปลา"],
 
   // ====== เลเวล 2: ง่าย (2 วัตถุดิบ) ======
   "🍗 ไก่กอและ": ["🍗 เนื้อไก่", "🌶️ เครื่องแกงใต้"],
   "🍳 ไข่ดาว": ["🥚 ไข่", "🛢️ น้ำมัน"],
+  "🍤 ทอดมันกุ้ง": ["🍤 กุ้ง", "🌾 แป้ง"],
+  "🥬 กะหล่ำปลีผัดน้ำปลา": ["🥬 กะหล่ำปลี", "🧂 น้ำปลา"],
 
   // ====== เลเวล 3: ง่าย–กลาง (3 วัตถุดิบ) ======
   "🍚 ข้าวยำปักษ์ใต้": ["🍚 ข้าวหอม", "🌿 สมุนไพรซอย", "🐟 น้ำบูดู"],
   "🥗 ส้มตำ": ["🥒 มะละกอ", "🌿 ถั่วฝักยาว", "🌶️ พริก"],
   "🍤 ข้าวผัดกุ้ง": ["🍚 ข้าวสวย", "🍤 กุ้ง", "🥚 ไข่"],
+  "🍲 ต้มจืดไข่": ["🥚 ไข่", "🌿 สาหร่าย", "🥢 เต้าหู้อ่อน"],
+  "🎃 ฟักทองผัดไข่": ["🎃 ฟักทอง", "🥚 ไข่", "🧄 กระเทียม"],
+  "🍗 ยำไก่เชียง": ["🍗 ไก่เชียง", "🥒 แตงกวา", "🌶️ พริก"],
 
   // ====== เลเวล 4: กลาง (4 วัตถุดิบ) ======
   "🍛 แกงไก่สะตอ": ["🍗 เนื้อไก่", "🌱 สะตอ", "🥥 กะทิ", "🌶️ เครื่องแกงใต้"],
   "🍤 ต้มยำกุ้ง": ["🍤 กุ้ง", "🌾 ตะไคร้", "🍃 ใบมะกรูด", "🌶️ พริก"],
   "🌿 ผัดกะเพราไก่": ["🍗 เนื้อไก่", "🌿 ใบกะเพรา", "🌶️ พริก", "🧄 กระเทียม"],
+  "🐟 ยำปลากระป๋อง": [
+    "🐟 ปลากระป๋อง",
+    "🌾 ตะไคร้",
+    "🍃 ใบมะกรูด",
+    "🍋 น้ำมะนาว",
+  ],
+  "🥚 ไข่ลูกเขย": [
+    "🥚 ไข่ต้ม",
+    "🍯 น้ำตาลปี๊บ",
+    "🍋 น้ำมะขามเปียก",
+    "🧅 หอมเจียว",
+  ],
 
   // ====== เลเวล 5: ยาก (5 วัตถุดิบ) ======
   "🍲 แกงเขียวหวาน": [
@@ -46,6 +66,27 @@ const recipes = {
     "🥭 มะม่วงดิบ",
     "🌶️ เครื่องแกงใต้",
     "🥬 ผักพื้นบ้าน",
+  ],
+  "🍛 ข้าวผัดอเมริกัน": [
+    "🍚 ข้าวสวย",
+    "🥕 แครอท",
+    "🌭 ไส้กรอก",
+    "🍗 ปีกไก่ทอด",
+    "🧅 หอมใหญ่",
+  ],
+  "🐂 ซุปหางวัว": [
+    "🐂 หางวัว",
+    "🍃 ใบมะกรูด",
+    "🌾 ตะไคร้",
+    "🍅 มะเขือเทศ",
+    "🍋 น้ำมะนาว",
+  ],
+  "🍜 บะหมี่ไก่แดง": [
+    "🍗 อกไก่",
+    "🧄 กระเทียม",
+    "🐟 ลูกชิ้นปลา",
+    "🍜 เส้นบะหมี่",
+    "🥚 ไข่ต้ม",
   ],
 };
 
@@ -74,6 +115,22 @@ const allIngredients = [
   "🌿 ถั่วฝักยาว",
   "🍆 มะเขือ",
   "🥭 มะม่วงดิบ",
+  "🥬 กะหล่ำปลี",
+  "🥬 ผัก",
+  "🌿 สาหร่าย",
+  "🎃 ฟักทอง",
+  "🥒 แตงกวา",
+  "🥕 แครอท",
+  "🧅 หอมใหญ่",
+  "🍅 มะเขือเทศ",
+
+  // เนื้อสัตว์/โปรตีนพิเศษ
+  "🍗 ไก่เชียง",
+  "🐟 ปลากระป๋อง",
+  "🍗 ปีกไก่ทอด",
+  "🐂 หางวัว",
+  "🍗 อกไก่",
+  "🐟 ลูกชิ้นปลา",
 
   // เครื่องปรุง
   "🧄 กระเทียม",
@@ -82,6 +139,14 @@ const allIngredients = [
   "🥢 ซีอิ๊ว",
   "🛢️ น้ำมัน",
   "🍋 น้ำมะนาว",
+  "🌾 แป้ง",
+  "🧂 น้ำปลา",
+  "🥢 เต้าหู้อ่อน",
+  "🍯 น้ำตาลปี๊บ",
+  "🍋 น้ำมะขามเปียก",
+  "🧅 หอมเจียว",
+  "🌭 ไส้กรอก",
+  "🍜 เส้นบะหมี่",
 
   // ทั่วไป
   "🥚 ไข่",
@@ -89,11 +154,39 @@ const allIngredients = [
 
 /* เมนูปลดล็อกตามเลเวล */
 const menuByLevel = {
-  1: ["🥥 น้ำกะทิ", "🍚 ข้าวหอม", "🍌 กล้วยหิน"],
-  2: ["🍗 ไก่กอและ", "🥚 ไข่ต้ม", "🍳 ไข่ดาว"],
-  3: ["🍚 ข้าวยำปักษ์ใต้", "🥗 ส้มตำ", "🍤 ข้าวผัดกุ้ง"],
-  4: ["🍛 แกงไก่สะตอ", "🍤 ต้มยำกุ้ง", "🌿 ผัดกะเพราไก่"],
-  5: ["🍲 แกงเขียวหวาน", "🐟 ซุปหัวปลา", "🍛 แกงส้มใต้"],
+  1: [
+    "🥥 น้ำกะทิ",
+    "🍚 ข้าวหอม",
+    "🍌 กล้วยหิน",
+    "🥚 ไข่ต้ม",
+    "🍗 ไก่ทอด",
+    "🥗 สลัดผัก",
+    "🐟 ปลาทอด",
+  ],
+  2: ["🍗 ไก่กอและ", "🍳 ไข่ดาว", "🍤 ทอดมันกุ้ง", "🥬 กะหล่ำปลีผัดน้ำปลา"],
+  3: [
+    "🍚 ข้าวยำปักษ์ใต้",
+    "🥗 ส้มตำ",
+    "🍤 ข้าวผัดกุ้ง",
+    "🍲 ต้มจืดไข่",
+    "🎃 ฟักทองผัดไข่",
+    "🍗 ยำไก่เชียง",
+  ],
+  4: [
+    "🍛 แกงไก่สะตอ",
+    "🍤 ต้มยำกุ้ง",
+    "🌿 ผัดกะเพราไก่",
+    "🐟 ยำปลากระป๋อง",
+    "🥚 ไข่ลูกเขย",
+  ],
+  5: [
+    "🍲 แกงเขียวหวาน",
+    "🐟 ซุปหัวปลา",
+    "🍛 แกงส้มใต้",
+    "🍛 ข้าวผัดอเมริกัน",
+    "🐂 ซุปหางวัว",
+    "🍜 บะหมี่ไก่แดง",
+  ],
 };
 
 /* ===============================
@@ -263,11 +356,17 @@ function showResult(success) {
     `;
   } else {
     const requiredIngredients = recipes[gameState.currentOrder] || [];
+
+    // 🔥 บทลงโทษ: ลบเหรียญ
+    const penalty = Math.min(20, gameState.coins); // สูงสุด 20 แต่ไม่ต่ำกว่า 0
+    gameState.coins -= penalty;
+
     resultContent.innerHTML = `
       <h2 class="error">💔 ล้มเหลว!</h2>
       <p>สูตร ${
         gameState.currentOrder
       } ต้องใช้:<br><strong>${requiredIngredients.join(" + ")}</strong></p>
+      <p>⚠️ คุณเสียเหรียญไป ${penalty} เหรียญ</p>
     `;
   }
 
@@ -325,7 +424,9 @@ function backToHome() {
   document.getElementById("tutorial-overlay").classList.add("hidden");
 
   // เคลียร์การเลือกวัตถุดิบในรอบที่เล่นอยู่ (ถ้ามี)
-  try { resetIngredients(); } catch (e) {}
+  try {
+    resetIngredients();
+  } catch (e) {}
 
   // (ถ้าต้องการให้ตัวเลขเวลาบนหน้าจอเกมกลับไปตรงกับ state ปัจจุบัน)
   const timerEl = document.getElementById("timer");
@@ -339,7 +440,6 @@ function backToHome() {
   // อัปเดตแถบสถิติ (ชื่อเสียง/เหรียญ/สูตร/ไอเท็ม)
   updateStats();
 }
-
 
 function startTimer() {
   const timerElement = document.getElementById("timer");
@@ -361,19 +461,19 @@ function updateLevelDisplay() {
   }
 }
 
-  function updateStats() {
-    document.getElementById("fame").textContent = gameState.fame;
-    document.getElementById("coins").textContent = gameState.coins;
-    document.getElementById("recipes").textContent = gameState.recipes;
+function updateStats() {
+  document.getElementById("fame").textContent = gameState.fame;
+  document.getElementById("coins").textContent = gameState.coins;
+  document.getElementById("recipes").textContent = gameState.recipes;
 
-    const hintStat = document.getElementById("hint-count");
-    const clearStat = document.getElementById("clear-count");
-    const shuffleStat = document.getElementById("shuffle-count");
+  const hintStat = document.getElementById("hint-count");
+  const clearStat = document.getElementById("clear-count");
+  const shuffleStat = document.getElementById("shuffle-count");
 
-    if (hintStat) hintStat.textContent = inventory.hint;
-    if (clearStat) clearStat.textContent = inventory.clear;
-    if (shuffleStat) shuffleStat.textContent = inventory.shuffle;
-  }
+  if (hintStat) hintStat.textContent = inventory.hint;
+  if (clearStat) clearStat.textContent = inventory.clear;
+  if (shuffleStat) shuffleStat.textContent = inventory.shuffle;
+}
 
 /* ===============================
    Tutorial System
@@ -472,15 +572,16 @@ function useHint() {
     if (!answer || answer.length === 0) return;
 
     // ล้าง hint เดิมก่อน
-    document.querySelectorAll(".ingredient.hint")
-      .forEach(el => el.classList.remove("hint"));
+    document
+      .querySelectorAll(".ingredient.hint")
+      .forEach((el) => el.classList.remove("hint"));
 
     // เลือกวัตถุดิบจากสูตรแบบสุ่ม
     const randomIngredient = answer[Math.floor(Math.random() * answer.length)];
 
     // หา element ที่ตรงกับ ingredient
     const ingredientDivs = document.querySelectorAll(".ingredient");
-    ingredientDivs.forEach(div => {
+    ingredientDivs.forEach((div) => {
       const name = div.querySelector(".name")?.textContent;
       const emoji = div.querySelector(".emoji")?.textContent;
       if (`${emoji} ${name}` === randomIngredient) {
@@ -489,9 +590,9 @@ function useHint() {
     });
 
     // แสดงข้อความใน message box
-    document.getElementById("message").textContent = "💡 Hint: มีวัตถุดิบถูกต้องถูกไฮไลท์แล้ว!";
+    document.getElementById("message").textContent =
+      "💡 Hint: มีวัตถุดิบถูกต้องถูกไฮไลท์แล้ว!";
     updateStats();
-
   } else {
     document.getElementById("message").textContent = "❌ ไม่มี Hint แล้ว!";
   }
