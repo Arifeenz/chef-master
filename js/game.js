@@ -641,7 +641,7 @@ function closeShop() {
   document.getElementById("shop-popup").classList.add("hidden");
 }
 function buyItem(type) {
-  const cost = { hint: 3, clear: 5, shuffle: 7 }[type];
+  const cost = { hint: 10, clear: 15, shuffle: 20 }[type];
   if (gameState.coins >= cost) {
     gameState.coins -= cost;
     inventory[type] = (inventory[type] || 0) + 1;
@@ -651,6 +651,7 @@ function buyItem(type) {
     alert("เหรียญไม่พอ!");
   }
 }
+
 
 function useHint() {
   if (inventory.hint > 0) {
@@ -707,15 +708,24 @@ function useHint() {
 function useClear() {
   if (inventory.clear > 0) {
     inventory.clear--;
-    resetIngredients();
+    gameState.timeLeft += 15; // เพิ่มเวลา 15 วิ
+    document.getElementById("message").textContent = "⏱️ Extra Time +15s!";
     updateStats();
-  } else alert("ไม่มี Clear แล้ว!");
+  } else {
+    document.getElementById("message").textContent = "❌ ไม่มี Extra Time แล้ว!";
+  }
 }
+
 
 function useShuffle() {
   if (inventory.shuffle > 0) {
     inventory.shuffle--;
-    createIngredients();
+    generateOrder();      // สุ่มออเดอร์ใหม่
+    createIngredients();  // โหลดวัตถุดิบใหม่ตามออเดอร์
+    document.getElementById("message").textContent = "🔄 ได้ออเดอร์ใหม่แล้ว!";
     updateStats();
-  } else alert("ไม่มี Shuffle แล้ว!");
+  } else {
+    document.getElementById("message").textContent = "❌ ไม่มี Shuffle แล้ว!";
+  }
 }
+

@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chef Master Game</title>
     <link rel="stylesheet" href="css/style.css" />
+    <style>
+      /* เพิ่มเพื่อให้ popup ซ้อนทับได้แน่นอน */
+      .shop-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2000;
+      }
+    </style>
   </head>
   <body>
     <div class="game-container">
@@ -31,7 +41,7 @@
           <div id="hint-count">0</div>
         </div>
         <div class="stat">
-          <div>🧽 Clear</div>
+          <div>⏱️ Extra Time</div>
           <div id="clear-count">0</div>
         </div>
         <div class="stat">
@@ -65,8 +75,7 @@
             📖 <strong>เส้นทางสู่ Master Chef:</strong><br />
             1️⃣ <strong>การฝึกหัด</strong> - เรียนรู้พื้นฐาน (1 วัตถุดิบ) 🥛<br />
             2️⃣ <strong>เชฟมือใหม่</strong> - ทำอาหารง่ายๆ (2 วัตถุดิบ) 🍞<br />
-            3️⃣ <strong>เชฟมืออาชีพ</strong> - อาหารระดับกลาง (3-4 วัตถุดิบ)
-            🍜<br />
+            3️⃣ <strong>เชฟมืออาชีพ</strong> - อาหารระดับกลาง (3-4 วัตถุดิบ) 🍜<br />
             4️⃣ <strong>การแข่งขัน</strong> - ท้าทายเวลา (4-5 วัตถุดิบ) 🍰<br />
             5️⃣ <strong>Master Chef</strong> - เป้าหมายสูงสุด! 👑
           </p>
@@ -75,15 +84,9 @@
         </div>
 
         <div class="action-buttons">
-          <button class="btn btn-primary" onclick="showTutorial()">
-            🎓 วิธีเล่น
-          </button>
-          <button class="btn btn-warning" onclick="openShop()">
-            🛒 ร้านค้า
-          </button>
-          <button class="btn btn-secondary" onclick="startGame()">
-            ⚡ เล่นเลย!
-          </button>
+          <button class="btn btn-primary" onclick="showTutorial()">🎓 วิธีเล่น</button>
+          <button class="btn btn-warning" onclick="openShop()">🛒 ร้านค้า</button>
+          <button class="btn btn-secondary" onclick="startGame()">⚡ เล่นเลย!</button>
         </div>
       </div>
 
@@ -100,41 +103,26 @@
         <div class="timer" id="timer">⏰ เวลา: 90 วินาที</div>
         <div class="game-area">
           <div class="order-header">
-            <div id="current-order">
-              🎯 ออเดอร์: <span id="order-dish">🥛 นม</span>
-            </div>
-            <div class="level-badge">
-              📊 ด่าน <span id="current-level">1</span>
-            </div>
+            <div id="current-order">🎯 ออเดอร์: <span id="order-dish">🥛 นม</span></div>
+            <div class="level-badge">📊 ด่าน <span id="current-level">1</span></div>
           </div>
-          <div class="cooking-area" id="cooking-area">
-            🍳 เลือกวัตถุดิบเพื่อทำอาหาร
-          </div>
+          <div class="cooking-area" id="cooking-area">🍳 เลือกวัตถุดิบเพื่อทำอาหาร</div>
           <div class="ingredients" id="ingredients"></div>
         </div>
 
         <div class="action-buttons">
-          <button
-            id="cook-btn"
-            class="btn btn-primary"
-            onclick="cookDish()"
-            disabled
-          >
+          <button id="cook-btn" class="btn btn-primary" onclick="cookDish()" disabled>
             👨‍🍳 ทำอาหาร!
           </button>
-          <button class="btn btn-secondary" onclick="resetIngredients()">
-            🔄 รีเซ็ต
-          </button>
-          <button class="btn btn-danger" onclick="backToHome()">
-            🏠 กลับหน้าแรก
-          </button>
+          <button class="btn btn-secondary" onclick="resetIngredients()">🔄 รีเซ็ต</button>
+          <button class="btn btn-danger" onclick="backToHome()">🏠 กลับหน้าแรก</button>
         </div>
 
-        <!-- ปุ่มใช้ Hint -->
+        <!-- ปุ่มใช้งานไอเทม -->
         <div class="action-buttons">
-          <button class="btn btn-warning" onclick="useHint()">
-            ใช้ Hint 🔍
-          </button>
+          <button class="btn btn-warning" onclick="useHint()">ใช้ Hint 🔍</button>
+          <button class="btn btn-success" onclick="useClear()">Extra Time ⏱️</button>
+          <button class="btn btn-secondary" onclick="useShuffle()">สุ่มออเดอร์ 🔄</button>
         </div>
 
         <div class="message" id="message"></div>
@@ -146,15 +134,9 @@
           <div id="result-content"></div>
         </div>
         <div class="action-buttons">
-          <button class="btn btn-success" onclick="nextLevel()">
-            ด่านต่อไป 🎯
-          </button>
-          <button class="btn btn-secondary" onclick="viewRecipes()">
-            ดูสูตรอาหาร 📋
-          </button>
-          <button class="btn btn-danger" onclick="backToHome()">
-            🏠 กลับหน้าแรก
-          </button>
+          <button class="btn btn-success" onclick="nextLevel()">ด่านต่อไป 🎯</button>
+          <button class="btn btn-secondary" onclick="viewRecipes()">ดูสูตรอาหาร 📋</button>
+          <button class="btn btn-danger" onclick="backToHome()">🏠 กลับหน้าแรก</button>
         </div>
       </div>
 
@@ -165,29 +147,23 @@
           <div class="recipe-list" id="recipe-list"></div>
         </div>
         <div class="action-buttons">
-          <button class="btn btn-primary" onclick="backToGame()">
-            กลับเกม 🎮
-          </button>
-          <button class="btn btn-danger" onclick="backToHome()">
-            🏠 กลับหน้าแรก
-          </button>
+          <button class="btn btn-primary" onclick="backToGame()">กลับเกม 🎮</button>
+          <button class="btn btn-danger" onclick="backToHome()">🏠 กลับหน้าแรก</button>
         </div>
       </div>
+    </div> <!-- ปิด game-container -->
 
-      <!-- ===== Shop Popup ===== -->
-      <div id="shop-popup" class="shop-popup hidden">
-        <div class="shop-box">
-          <h2>🛒 ร้านค้า</h2>
-          <p>เลือกซื้อไอเทมพิเศษ เพื่อช่วยในการทำอาหาร!</p>
-          <div class="shop-items">
-            <button onclick="buyItem('hint')">🔍 Hint (3 coins)</button>
-            <button onclick="buyItem('clear')">🧽 Clear (5 coins)</button>
-            <button onclick="buyItem('shuffle')">🔄 Shuffle (7 coins)</button>
-          </div>
-          <button class="btn btn-danger" onclick="closeShop()">
-            ❌ ปิดร้าน
-          </button>
+    <!-- ===== Shop Popup (ย้ายออกมานอก game-container) ===== -->
+    <div id="shop-popup" class="shop-popup hidden">
+      <div class="shop-box">
+        <h2>🛒 ร้านค้า</h2>
+        <p>เลือกซื้อไอเทมพิเศษ เพื่อช่วยในการทำอาหาร!</p>
+        <div class="shop-items">
+          <button onclick="buyItem('hint')">🔍 Hint (10 coins)</button>
+          <button onclick="buyItem('clear')">⏱️ Extra Time (15 coins)</button>
+          <button onclick="buyItem('shuffle')">🔄 Shuffle Order (20 coins)</button>
         </div>
+        <button class="btn btn-danger" onclick="closeShop()">❌ ปิดร้าน</button>
       </div>
     </div>
 
