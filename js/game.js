@@ -190,6 +190,20 @@ const menuByLevel = {
 };
 
 /* ===============================
+   ด่านบอสพิเศษ (6 วัตถุดิบ)
+================================= */
+const bossRecipes = {
+  "👑 Ultimate Master Dish": [
+    "🍗 เนื้อไก่",
+    "🍤 กุ้ง",
+    "🥥 กะทิ",
+    "🍚 ข้าวหอม",
+    "🌶️ พริก",
+    "🧄 กระเทียม",
+  ],
+};
+
+/* ===============================
    State ของเกม
 ================================= */
 let gameState = {
@@ -202,6 +216,7 @@ let gameState = {
   timeLeft: 90,
   timer: null,
   unlockedRecipes: [...menuByLevel[1]],
+  bossStage: false, // <-- เพิ่ม flag ตรงนี้
 };
 
 /* ===============================
@@ -276,6 +291,56 @@ function createIngredients() {
   });
 }
 
+/* ===============================
+   ด่านบอสพิเศษ
+================================= */
+function showBossStage() {
+  document.getElementById("result-screen").classList.add("hidden");
+  document.getElementById("game-screen").classList.remove("hidden");
+
+  // ใช้เมนูบอส
+  const bossMenu = Object.keys(bossRecipes)[0];
+  gameState.currentOrder = bossMenu;
+  document.getElementById("order-dish").textContent = bossMenu;
+
+  // แสดงวัตถุดิบ (6 ของจริง + วัตถุดิบลวง)
+  const container = document.getElementById("ingredients");
+  container.innerHTML = "";
+
+  const requiredIngredients = bossRecipes[bossMenu];
+
+  // ดึง distractors มาเพิ่มให้สับสน
+  const distractors = allIngredients.filter(
+    (i) => !requiredIngredients.includes(i)
+  );
+  const shuffledDistractors = shuffle(distractors).slice(
+    0,
+    12 - requiredIngredients.length
+  );
+
+  let finalIngredients = [...requiredIngredients, ...shuffledDistractors];
+  finalIngredients = shuffle(finalIngredients);
+
+  finalIngredients.forEach((ingredient) => {
+    const div = document.createElement("div");
+    div.className = "ingredient";
+    const parts = ingredient.split(" ");
+    const emoji = parts[0];
+    const name = parts.slice(1).join(" ");
+    div.innerHTML = `<div class="emoji">${emoji}</div><div class="name">${name}</div>`;
+    div.onclick = () => selectIngredient(ingredient, div);
+    container.appendChild(div);
+  });
+
+  // ตั้งเวลาให้น้อยลงเพื่อเพิ่มความท้าทาย
+  gameState.timeLeft = 45;
+  startTimer();
+
+  // แสดงข้อความพิเศษ
+  document.getElementById("message").textContent =
+    "🔥 ด่านบอส! ทำเมนูนี้ให้สำเร็จเพื่อเป็น Master Chef!";
+}
+
 function selectIngredient(ingredient, element) {
   if (element.classList.contains("selected")) {
     element.classList.remove("selected");
@@ -313,11 +378,16 @@ function resetIngredients() {
 }
 
 function cookDish() {
-  const requiredIngredients = recipes[gameState.currentOrder] || [];
+  // รวมสูตรปกติ + สูตรบอส
+  const allRecipes = { ...recipes, ...bossRecipes };
+  const requiredIngredients = allRecipes[gameState.currentOrder] || [];
+
   const hasAll = requiredIngredients.every((req) =>
     gameState.selectedIngredients.includes(req)
   );
+
   clearInterval(gameState.timer);
+
   if (
     hasAll &&
     gameState.selectedIngredients.length === requiredIngredients.length
@@ -333,7 +403,20 @@ function showResult(success) {
   document.getElementById("result-screen").classList.remove("hidden");
   const resultContent = document.getElementById("result-content");
 
+  const allRecipes = { ...recipes, ...bossRecipes };
+  const requiredIngredients = allRecipes[gameState.currentOrder] || [];
+
   if (success) {
+    // 🏆 ถ้าเป็นด่านบอส → จบเกมเลย
+    if (gameState.bossStage) {
+      resultContent.innerHTML = `
+        <h2 class="success">👑 คุณคือ Master Chef!</h2>
+        <p>คุณผ่านด่านบอสพิเศษแล้ว ได้กลายเป็นตำนาน!</p>
+      `;
+      return; // ❗ จบเกม ไม่ไปบวก fame/level ต่อ
+    }
+
+    // ด่านปกติ
     const reward = Math.floor(Math.random() * 50) + 30;
     gameState.fame += 10;
     gameState.coins += reward;
@@ -355,10 +438,8 @@ function showResult(success) {
       <p>+10 ชื่อเสียง และ +${reward} เหรียญ</p>
     `;
   } else {
-    const requiredIngredients = recipes[gameState.currentOrder] || [];
-
-    // 🔥 บทลงโทษ: ลบเหรียญ
-    const penalty = Math.min(20, gameState.coins); // สูงสุด 20 แต่ไม่ต่ำกว่า 0
+    // ล้มเหลว → หักเหรียญ
+    const penalty = Math.min(20, gameState.coins);
     gameState.coins -= penalty;
 
     resultContent.innerHTML = `
@@ -374,6 +455,14 @@ function showResult(success) {
 }
 
 function nextLevel() {
+  // 🔎 เช็กว่าเข้าสู่ Boss Stage หรือยัง
+  if (gameState.fame >= 100 && !gameState.bossStage) {
+    gameState.bossStage = true; // ตั้ง flag
+    showBossStage(); // ไปฟังก์ชันด่านบอส
+    return;
+  }
+
+  // ด่านปกติ
   document.getElementById("result-screen").classList.add("hidden");
   document.getElementById("game-screen").classList.remove("hidden");
   generateOrder();
