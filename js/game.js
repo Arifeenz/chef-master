@@ -652,23 +652,40 @@ function buyItem(type) {
   }
 }
 
-/* เพิ่มคำสั่งใช้ไอเท็ม (คุณสามารถสร้างปุ่มเอง แล้วเชื่อมกับฟังก์ชันเหล่านี้) */
 function useHint() {
   if (inventory.hint > 0) {
     inventory.hint--;
 
-    const answer = recipes[gameState.currentOrder];
+    // รวมสูตรปกติ + สูตรบอส
+    const allRecipes = { ...recipes, ...bossRecipes };
+    const answer = allRecipes[gameState.currentOrder];
     if (!answer || answer.length === 0) return;
 
-    // ล้าง hint เดิมก่อน
-    document
-      .querySelectorAll(".ingredient.hint")
-      .forEach((el) => el.classList.remove("hint"));
+    // เก็บวัตถุดิบที่ถูกเลือกแล้ว
+    const alreadySelected = gameState.selectedIngredients;
 
-    // เลือกวัตถุดิบจากสูตรแบบสุ่ม
-    const randomIngredient = answer[Math.floor(Math.random() * answer.length)];
+    // เก็บวัตถุดิบที่ถูก hint ไปแล้ว
+    const alreadyHinted = Array.from(document.querySelectorAll(".ingredient.hint"))
+      .map(div => {
+        const name = div.querySelector(".name")?.textContent;
+        const emoji = div.querySelector(".emoji")?.textContent;
+        return `${emoji} ${name}`;
+      });
 
-    // หา element ที่ตรงกับ ingredient
+    // กรองเอาเฉพาะวัตถุดิบที่ยังไม่ได้เลือก และยังไม่ได้ hint
+    const candidates = answer.filter(
+      ing => !alreadySelected.includes(ing) && !alreadyHinted.includes(ing)
+    );
+
+    if (candidates.length === 0) {
+      document.getElementById("message").textContent = "ℹ️ ไม่มีวัตถุดิบใหม่ให้ใบ้อีกแล้ว!";
+      return;
+    }
+
+    // สุ่มจากวัตถุดิบที่เหลือ
+    const randomIngredient = candidates[Math.floor(Math.random() * candidates.length)];
+
+    // หา element ที่ตรงกับ ingredient แล้วไฮไลท์
     const ingredientDivs = document.querySelectorAll(".ingredient");
     ingredientDivs.forEach((div) => {
       const name = div.querySelector(".name")?.textContent;
@@ -680,7 +697,7 @@ function useHint() {
 
     // แสดงข้อความใน message box
     document.getElementById("message").textContent =
-      "💡 Hint: มีวัตถุดิบถูกต้องถูกไฮไลท์แล้ว!";
+      "💡 Hint: มีวัตถุดิบใหม่ถูกไฮไลท์แล้ว!";
     updateStats();
   } else {
     document.getElementById("message").textContent = "❌ ไม่มี Hint แล้ว!";
